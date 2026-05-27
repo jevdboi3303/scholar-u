@@ -1,77 +1,116 @@
-# Scholarship Finder
+# ScholarU
 
-Welcome to the **Scholarship Finder** repository! This project is designed to help users find scholarships that match their criteria, making the process of funding education easier and more accessible.
+A scholarship finder for UVic students. Browse and filter 1,300+ scholarships scraped directly from the UVic awards database, save the ones you're interested in, and track deadlines — all in one place.
 
-## Table of Contents
+## Features
 
-- [Description](#description)
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contact](#contact)
+- **1,300+ scholarships** sourced live from the UVic webfilters API
+- **Instant filtering** by type, faculty, GPA, renewable status, application requirement, and eligibility criteria (Indigenous students, students with disabilities)
+- **Full-text search** across scholarship names and descriptions
+- **Deadline tracking** with urgency indicators (overdue / due soon / upcoming)
+- **Save scholarships** and track application status (Saved → Applied → Awarded)
+- **User profiles** — store your faculty, year, and GPA for future matching
+- **Google sign-in** or email/password auth via Supabase
 
-#### Description
+## Tech Stack
 
-Scholarship Finder is a web application that allows users to search for scholarships based on various filters such as Type of Scholarship, Faculty, and Gender etc. The goal is to streamline the process of finding financial aid for students.
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 15 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS |
+| Database | Supabase (PostgreSQL) |
+| Auth | Supabase Auth (Google OAuth + email) |
 
-#### Features
+## Getting Started
 
-- **Search Filters:** Filter scholarships by location, field of study, and eligibility.
-- **User-Friendly Interface:** Easy-to-navigate UI for a seamless user experience.
-- **Updated Database:** Regularly updated scholarship data to ensure accuracy.
+### Prerequisites
 
-#### Installation
+- Node.js 18+
+- A [Supabase](https://supabase.com) project
 
-To run this project locally on a Windows machine, follow these steps:
+### 1. Clone and install
 
-1. **Clone the repository:**
+```bash
+git clone https://github.com/VikeLabs/scholar-u.git
+cd scholar-u
+npm install
+```
 
-    Open Command Prompt and run:
-    ```bash
-    git clone https://github.com/jevdboi3303/Scholarship-Finder.git
-    ```
+### 2. Configure environment
 
-2. **Navigate to the project directory:**
+Create a `.env.local` file in the project root (see `.env.local.example`):
 
-    ```bash
-    cd Scholarship-Finder
-    ```
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://<your-project>.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-anon-key>
+```
 
-3. **Install Node.js:**
+### 3. Set up the database
 
-    If you don't have Node.js installed, download and install it from the [official website](https://nodejs.org/).
+Run the migration in the Supabase SQL editor:
 
-4. **Install the required dependencies:**
+```
+supabase/migrations/001_initial.sql
+```
 
-    ```bash
-    npm install
-    ```
-5. **Install MongoDB Compass**
+This creates the `scholarships`, `user_profiles`, and `saved_scholarships` tables with Row Level Security policies.
 
-    Download and install it from the [official website](https://www.mongodb.com/products/tools/compass).
+### 4. Seed scholarship data
 
-6. **Import the database queries**
+Add your Supabase service role key to `.env.local`:
 
-    Import [Database Collection](https://github.com/jevdboi3303/Scholarship-Finder/blob/main/scholarship-finder.scholarships.json) into the MongoDB Compass.
+```env
+SUPABASE_SERVICE_ROLE_KEY=<your-service-role-key>
+```
 
-7. **Run the application:**
+Then run the scraper:
 
-    ```bash
-    node app.js
-    ```
+```bash
+node scripts/scrape-uvic.mjs
+```
 
-#### Usage
+This fetches all scholarships from the UVic webfilters API and upserts them into the database.
 
-Once the application is running, you can access it through your web browser at `http://localhost:3000`. Use the search filters to find scholarships that meet your criteria and bookmark the ones you are interested in.
+### 5. Run the dev server
 
-#### Contact
+```bash
+npm run dev
+```
 
-If you have any questions or need further assistance, feel free to reach out:
+Open [http://localhost:3000](http://localhost:3000).
 
-- **GitHub Issues:** Open an issue if you encounter any problems.
-- **Email:** harsadh32@gmail.com<br />
-ancaparas729@gmail.com<br />
-harshitasankar@gmail.com<br />
-ngocnaomi@gmail.com<br />
+## Google OAuth Setup
 
-Thank you for using Scholarship Finder! We hope it helps you find the financial support you need for your education.
+1. Go to [Google Cloud Console](https://console.cloud.google.com) → APIs & Services → Credentials → Create OAuth 2.0 Client
+2. Add `https://<your-project>.supabase.co/auth/v1/callback` as an authorized redirect URI
+3. In Supabase → Authentication → Providers → Google, enable the provider and paste your Client ID and Client Secret
+
+## Project Structure
+
+```
+app/
+  page.tsx              # Home — scholarship browse
+  dashboard/            # User dashboard (saved, deadlines, profile)
+  auth/                 # Login, signup, OAuth callback
+  api/                  # saved/ and profile/ API routes
+components/
+  ScholarshipGrid.tsx   # Client-side filtering + pagination
+  ScholarshipCard.tsx   # Individual scholarship card
+  FilterPanel.tsx       # Sidebar filters
+  OAuthButtons.tsx      # Google sign-in button
+  DashboardContent.tsx  # Dashboard tabs
+lib/
+  supabase/             # Server + browser Supabase clients
+  utils.ts              # Formatting helpers
+scripts/
+  scrape-uvic.mjs       # UVic scholarship scraper
+supabase/
+  migrations/           # SQL schema
+types/
+  index.ts              # TypeScript interfaces
+```
+
+## Contributing
+
+This project is maintained by [VikeLabs](https://vikelabs.ca). PRs are welcome — please open an issue first to discuss larger changes.
