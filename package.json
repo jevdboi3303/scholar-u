@@ -10,24 +10,25 @@
     "migrate": "node scripts/migrate.mjs"
   },
   "dependencies": {
+    "@opentelemetry/api": "^1.9.1",
+    "@supabase/ssr": "^0.5.1",
+    "@supabase/supabase-js": "^2.45.4",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.469.0",
     "next": "15.3.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "@supabase/supabase-js": "^2.45.4",
-    "@supabase/ssr": "^0.5.1",
-    "lucide-react": "^0.469.0",
-    "clsx": "^2.1.1",
     "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "tailwindcss": "^3.4.17",
-    "postcss": "^8",
     "autoprefixer": "^10.0.1",
     "eslint": "^9",
-    "eslint-config-next": "15.3.2"
+    "eslint-config-next": "15.3.2",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5"
   }
 }
