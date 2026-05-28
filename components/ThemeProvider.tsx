@@ -12,23 +12,24 @@ interface ThemeCtx {
 const Context = createContext<ThemeCtx>({ theme: 'light', toggle: () => {} })
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('light')
+  // Read the current class from <html> so we're always in sync with the
+  // inline script that runs before hydration (see layout.tsx <head>).
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof document === 'undefined') return 'light'
+    return document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+  })
 
+  // Keep state in sync on mount (handles SSR mismatch)
   useEffect(() => {
-    const saved = localStorage.getItem('scholar-u:theme') as Theme | null
-    const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-    const initial = saved ?? preferred
-    setTheme(initial)
-    document.documentElement.classList.toggle('dark', initial === 'dark')
+    const current = document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+    setTheme(current)
   }, [])
 
   const toggle = useCallback(() => {
-    setTheme((prev) => {
-      const next: Theme = prev === 'light' ? 'dark' : 'light'
-      localStorage.setItem('scholar-u:theme', next)
-      document.documentElement.classList.toggle('dark', next === 'dark')
-      return next
-    })
+    const next: Theme = document.documentElement.classList.contains('dark') ? 'light' : 'dark'
+    document.documentElement.classList.toggle('dark', next === 'dark')
+    localStorage.setItem('scholar-u:theme', next)
+    setTheme(next)
   }, [])
 
   return <Context.Provider value={{ theme, toggle }}>{children}</Context.Provider>

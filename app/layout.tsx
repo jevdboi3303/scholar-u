@@ -11,6 +11,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
+      <head>
+        {/* Blocking script: sets dark class before first paint to prevent FOUC */}
+        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('scholar-u:theme');if(t==='dark'||(t===null&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}}catch(e){}})();` }} />
+      </head>
       <body className="h-full flex flex-col">
         <ThemeProvider>
           <Navbar />
