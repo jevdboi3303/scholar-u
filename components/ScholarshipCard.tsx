@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { Bookmark, BookmarkCheck, ChevronDown, ChevronUp, DollarSign, GraduationCap, Calendar, AlertCircle, ExternalLink } from 'lucide-react'
 import { cn, formatAmount, formatDeadline, daysUntilDeadline, deadlineUrgency } from '@/lib/utils'
 import type { Scholarship } from '@/types'
@@ -88,8 +89,13 @@ export default function ScholarshipCard({ scholarship, saved = false, onSaveTogg
         </div>
 
         {/* Name */}
-        <h3 className="font-semibold text-slate-900 text-base leading-snug mb-3">
-          {scholarship.name}
+        <h3 className="font-semibold text-base leading-snug mb-3">
+          <Link
+            href={`/scholarships/${scholarship.id}`}
+            className="text-slate-900 hover:text-primary-600 transition-colors"
+          >
+            {scholarship.name}
+          </Link>
         </h3>
 
         {/* Meta row */}

@@ -52,9 +52,13 @@ export interface ScholarshipFilters {
   type: string
   faculty: string
   minGpa: string
+  minAmount: string
+  maxAmount: string
   year: string
   applicationRequired: boolean | null
   renewable: boolean | null
   indigenous: boolean
   disability: boolean
 }
+
+export type SortOption = 'default' | 'amount_desc' | 'amount_asc' | 'deadline_asc' | 'name_asc'

@@ -90,6 +90,34 @@ export default function FilterPanel({ filters, faculties, types, onChange, onRes
         </select>
       </div>
 
+      {/* Amount range */}
+      <div>
+        <label className="block text-xs font-medium text-slate-500 uppercase tracking-wide mb-2">
+          Award Amount ($)
+        </label>
+        <div className="flex items-center gap-2">
+          <input
+            type="number"
+            min="0"
+            step="100"
+            placeholder="Min"
+            value={filters.minAmount}
+            onChange={(e) => set('minAmount', e.target.value)}
+            className="input-field text-sm w-full"
+          />
+          <span className="text-slate-400 text-sm flex-shrink-0">–</span>
+          <input
+            type="number"
+            min="0"
+            step="100"
+            placeholder="Max"
+            value={filters.maxAmount}
+            onChange={(e) => set('maxAmount', e.target.value)}
+            className="input-field text-sm w-full"
+          />
+        </div>
+      </div>
+
       {/* Min GPA */}
       <div>
         <label className="block text-xs font-medium text-slate-500 uppercase tracking-wide mb-2">
