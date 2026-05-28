@@ -22,11 +22,26 @@ export default async function DashboardPage() {
       .order('created_at', { ascending: false }),
   ])
 
+  // Count scholarships that match the user's profile
+  let matchCount = 0
+  if (profile) {
+    try {
+      let q = supabase.from('scholarships').select('*', { count: 'exact', head: true })
+      if (!profile.indigenous) q = q.or('indigenous.is.null,indigenous.eq.false')
+      if (!profile.disability)  q = q.or('disability.is.null,disability.eq.false')
+      if (profile.faculty)      q = q.or(`faculty.is.null,faculty.ilike.%${profile.faculty}%`)
+      if (profile.gpa && profile.gpa > 0) q = q.or(`gpa.is.null,gpa.lte.${profile.gpa}`)
+      const { count } = await q
+      matchCount = count ?? 0
+    } catch { /* non-critical */ }
+  }
+
   return (
     <DashboardContent
       user={{ id: user.id, email: user.email ?? '' }}
       profile={profile as UserProfile | null}
       savedScholarships={(savedScholarships ?? []) as SavedScholarship[]}
+      matchCount={matchCount}
     />
   )
 }

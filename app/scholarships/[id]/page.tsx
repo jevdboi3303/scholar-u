@@ -8,6 +8,8 @@ import {
 import { cn, formatAmount, formatDeadline, daysUntilDeadline, deadlineUrgency } from '@/lib/utils'
 import type { Scholarship } from '@/types'
 import SaveButton from './SaveButton'
+import ShareButton from './ShareButton'
+import TrackView from './TrackView'
 
 export const revalidate = 3600
 
@@ -64,7 +66,8 @@ export default async function ScholarshipDetailPage({ params }: Props) {
   const typeColor = TYPE_COLORS[s.scholarship_type ?? ''] ?? 'bg-slate-100 text-slate-600 border-slate-200'
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
+      <TrackView item={{ id: s.id, name: s.name, amount: s.amount, scholarship_type: s.scholarship_type }} />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         {/* Back */}
@@ -82,7 +85,7 @@ export default async function ScholarshipDetailPage({ params }: Props) {
           <div className="lg:col-span-2 space-y-5">
 
             {/* Header card */}
-            <div className="bg-white rounded-xl border border-slate-200 p-6">
+            <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
               {/* Badges */}
               <div className="flex flex-wrap gap-2 mb-4">
                 {s.scholarship_type && (
@@ -117,7 +120,7 @@ export default async function ScholarshipDetailPage({ params }: Props) {
                 )}
               </div>
 
-              <h1 className="text-2xl font-bold text-slate-900 leading-snug mb-4">
+              <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100 leading-snug mb-4">
                 {s.name}
               </h1>
 
@@ -170,7 +173,7 @@ export default async function ScholarshipDetailPage({ params }: Props) {
 
               {/* Description */}
               {s.description && (
-                <p className="text-slate-700 leading-relaxed whitespace-pre-line">
+                <p className="text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line">
                   {s.description}
                 </p>
               )}
@@ -182,7 +185,7 @@ export default async function ScholarshipDetailPage({ params }: Props) {
           <div className="space-y-4">
 
             {/* CTA card */}
-            <div className="bg-white rounded-xl border border-slate-200 p-5 space-y-3">
+            <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 space-y-3">
               {s.source_url && (
                 <a
                   href={s.source_url}
@@ -199,58 +202,59 @@ export default async function ScholarshipDetailPage({ params }: Props) {
                 initialSaved={isSaved}
                 isLoggedIn={!!user}
               />
+              <ShareButton />
             </div>
 
             {/* Details card */}
-            <div className="bg-white rounded-xl border border-slate-200 p-5">
-              <h2 className="text-sm font-semibold text-slate-700 mb-3">Details</h2>
+            <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5">
+              <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Details</h2>
               <dl className="space-y-2.5 text-sm">
                 {s.scholarship_type && (
                   <div className="flex justify-between gap-2">
-                    <dt className="text-slate-500">Type</dt>
+                    <dt className="text-slate-500 dark:text-slate-400">Type</dt>
                     <dd className="text-slate-800 font-medium text-right">{s.scholarship_type}</dd>
                   </div>
                 )}
                 {s.amount && (
                   <div className="flex justify-between gap-2">
-                    <dt className="text-slate-500">Value</dt>
-                    <dd className="text-slate-800 font-medium">{formatAmount(s.amount)}</dd>
+                    <dt className="text-slate-500 dark:text-slate-400">Value</dt>
+                    <dd className="text-slate-800 dark:text-slate-200 font-medium">{formatAmount(s.amount)}</dd>
                   </div>
                 )}
                 {s.quantity && (
                   <div className="flex justify-between gap-2">
-                    <dt className="text-slate-500">Number awarded</dt>
-                    <dd className="text-slate-800 font-medium">{s.quantity}</dd>
+                    <dt className="text-slate-500 dark:text-slate-400">Number awarded</dt>
+                    <dd className="text-slate-800 dark:text-slate-200 font-medium">{s.quantity}</dd>
                   </div>
                 )}
                 {s.faculty && (
                   <div className="flex justify-between gap-2">
-                    <dt className="text-slate-500">Faculty</dt>
+                    <dt className="text-slate-500 dark:text-slate-400">Faculty</dt>
                     <dd className="text-slate-800 font-medium text-right">{s.faculty}</dd>
                   </div>
                 )}
                 {s.year && (
                   <div className="flex justify-between gap-2">
-                    <dt className="text-slate-500">Year</dt>
-                    <dd className="text-slate-800 font-medium">Year {s.year}</dd>
+                    <dt className="text-slate-500 dark:text-slate-400">Year</dt>
+                    <dd className="text-slate-800 dark:text-slate-200 font-medium">Year {s.year}</dd>
                   </div>
                 )}
                 {s.gpa && s.gpa > 0 && (
                   <div className="flex justify-between gap-2">
-                    <dt className="text-slate-500">Min GPA</dt>
-                    <dd className="text-slate-800 font-medium">{s.gpa}</dd>
+                    <dt className="text-slate-500 dark:text-slate-400">Min GPA</dt>
+                    <dd className="text-slate-800 dark:text-slate-200 font-medium">{s.gpa}</dd>
                   </div>
                 )}
                 {s.gender && (
                   <div className="flex justify-between gap-2">
-                    <dt className="text-slate-500">Gender</dt>
-                    <dd className="text-slate-800 font-medium">{s.gender}</dd>
+                    <dt className="text-slate-500 dark:text-slate-400">Gender</dt>
+                    <dd className="text-slate-800 dark:text-slate-200 font-medium">{s.gender}</dd>
                   </div>
                 )}
                 {s.nationality && (
                   <div className="flex justify-between gap-2">
-                    <dt className="text-slate-500">Nationality</dt>
-                    <dd className="text-slate-800 font-medium">{s.nationality}</dd>
+                    <dt className="text-slate-500 dark:text-slate-400">Nationality</dt>
+                    <dd className="text-slate-800 dark:text-slate-200 font-medium">{s.nationality}</dd>
                   </div>
                 )}
                 {s.renewable !== null && (
@@ -258,7 +262,7 @@ export default async function ScholarshipDetailPage({ params }: Props) {
                     <dt className="text-slate-500 flex items-center gap-1">
                       <RefreshCw className="w-3.5 h-3.5" /> Renewable
                     </dt>
-                    <dd className="text-slate-800 font-medium">{s.renewable ? 'Yes' : 'No'}</dd>
+                    <dd className="text-slate-800 dark:text-slate-200 font-medium">{s.renewable ? 'Yes' : 'No'}</dd>
                   </div>
                 )}
                 {s.application_required !== null && (
@@ -266,7 +270,7 @@ export default async function ScholarshipDetailPage({ params }: Props) {
                     <dt className="text-slate-500 flex items-center gap-1">
                       <ClipboardList className="w-3.5 h-3.5" /> Application
                     </dt>
-                    <dd className="text-slate-800 font-medium">{s.application_required ? 'Required' : 'Not required'}</dd>
+                    <dd className="text-slate-800 dark:text-slate-200 font-medium">{s.application_required ? 'Required' : 'Not required'}</dd>
                   </div>
                 )}
                 {(s.indigenous || s.disability) && (
@@ -284,8 +288,8 @@ export default async function ScholarshipDetailPage({ params }: Props) {
 
             {/* Related scholarships */}
             {related && related.length > 0 && (
-              <div className="bg-white rounded-xl border border-slate-200 p-5">
-                <h2 className="text-sm font-semibold text-slate-700 mb-3">Related scholarships</h2>
+              <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5">
+                <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Related scholarships</h2>
                 <ul className="space-y-2">
                   {related.map((r) => (
                     <li key={r.id}>

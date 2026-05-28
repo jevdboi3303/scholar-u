@@ -5,13 +5,8 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 248 250 252;
-    --foreground: 15 23 42;
-  }
-
   body {
-    @apply bg-slate-50 text-slate-900 antialiased;
+    @apply bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased;
     font-family: 'Inter', system-ui, sans-serif;
   }
 
@@ -29,25 +24,38 @@
   }
 
   .btn-secondary {
-    @apply inline-flex items-center gap-2 px-4 py-2 bg-white text-slate-700 font-medium rounded-lg
-           border border-slate-200 hover:bg-slate-50 active:bg-slate-100 transition-colors duration-150
+    @apply inline-flex items-center gap-2 px-4 py-2
+           bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200
+           font-medium rounded-lg border border-slate-200 dark:border-slate-700
+           hover:bg-slate-50 dark:hover:bg-slate-700
+           active:bg-slate-100 dark:active:bg-slate-600
+           transition-colors duration-150
            focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center gap-2 px-3 py-2 text-slate-600 font-medium rounded-lg
-           hover:bg-slate-100 active:bg-slate-200 transition-colors duration-150
+    @apply inline-flex items-center gap-2 px-3 py-2
+           text-slate-600 dark:text-slate-300 font-medium rounded-lg
+           hover:bg-slate-100 dark:hover:bg-slate-800
+           active:bg-slate-200 dark:active:bg-slate-700
+           transition-colors duration-150
            focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2;
   }
 
   .input-field {
-    @apply w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-900
-           placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
+    @apply w-full px-3 py-2
+           bg-white dark:bg-slate-800
+           border border-slate-200 dark:border-slate-700
+           rounded-lg text-sm text-slate-900 dark:text-slate-100
+           placeholder:text-slate-400 dark:placeholder:text-slate-500
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
            transition duration-150;
   }
 
   .card {
-    @apply bg-white rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow duration-200;
+    @apply bg-white dark:bg-slate-900 rounded-xl
+           border border-slate-100 dark:border-slate-800
+           shadow-sm hover:shadow-md transition-shadow duration-200;
   }
 
   .badge {

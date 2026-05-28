@@ -18,9 +18,9 @@ export default function FilterPanel({ filters, faculties, types, onChange, onRes
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-5 space-y-5">
+    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 space-y-5">
       <div className="flex items-center justify-between">
-        <h2 className="flex items-center gap-2 font-semibold text-slate-800 text-sm">
+        <h2 className="flex items-center gap-2 font-semibold text-slate-800 dark:text-slate-200 text-sm">
           <SlidersHorizontal className="w-4 h-4" />
           Filters
           {activeCount > 0 && (
@@ -40,7 +40,7 @@ export default function FilterPanel({ filters, faculties, types, onChange, onRes
 
       {/* Scholarship type */}
       <div>
-        <label className="block text-xs font-medium text-slate-500 uppercase tracking-wide mb-2">
+        <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">
           Type
         </label>
         <select
@@ -57,7 +57,7 @@ export default function FilterPanel({ filters, faculties, types, onChange, onRes
 
       {/* Faculty */}
       <div>
-        <label className="block text-xs font-medium text-slate-500 uppercase tracking-wide mb-2">
+        <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">
           Faculty / Department
         </label>
         <select
@@ -74,7 +74,7 @@ export default function FilterPanel({ filters, faculties, types, onChange, onRes
 
       {/* Year */}
       <div>
-        <label className="block text-xs font-medium text-slate-500 uppercase tracking-wide mb-2">
+        <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">
           Year of Study
         </label>
         <select
@@ -92,7 +92,7 @@ export default function FilterPanel({ filters, faculties, types, onChange, onRes
 
       {/* Amount range */}
       <div>
-        <label className="block text-xs font-medium text-slate-500 uppercase tracking-wide mb-2">
+        <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">
           Award Amount ($)
         </label>
         <div className="flex items-center gap-2">
@@ -120,7 +120,7 @@ export default function FilterPanel({ filters, faculties, types, onChange, onRes
 
       {/* Min GPA */}
       <div>
-        <label className="block text-xs font-medium text-slate-500 uppercase tracking-wide mb-2">
+        <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">
           Minimum GPA
         </label>
         <input
@@ -137,7 +137,7 @@ export default function FilterPanel({ filters, faculties, types, onChange, onRes
 
       {/* Application required */}
       <div>
-        <label className="block text-xs font-medium text-slate-500 uppercase tracking-wide mb-2">
+        <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">
           Application
         </label>
         <select
@@ -155,7 +155,7 @@ export default function FilterPanel({ filters, faculties, types, onChange, onRes
 
       {/* Renewable */}
       <div>
-        <label className="block text-xs font-medium text-slate-500 uppercase tracking-wide mb-2">
+        <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">
           Renewable
         </label>
         <select
@@ -183,7 +183,7 @@ export default function FilterPanel({ filters, faculties, types, onChange, onRes
             onChange={(e) => set('indigenous', e.target.checked)}
             className="w-4 h-4 rounded text-primary-600 border-slate-300 focus:ring-primary-500"
           />
-          <span className="text-sm text-slate-700 group-hover:text-slate-900">
+          <span className="text-sm text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-slate-100">
             Indigenous students
           </span>
         </label>
@@ -194,7 +194,7 @@ export default function FilterPanel({ filters, faculties, types, onChange, onRes
             onChange={(e) => set('disability', e.target.checked)}
             className="w-4 h-4 rounded text-primary-600 border-slate-300 focus:ring-primary-500"
           />
-          <span className="text-sm text-slate-700 group-hover:text-slate-900">
+          <span className="text-sm text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-slate-100">
             Students with disabilities
           </span>
         </label>

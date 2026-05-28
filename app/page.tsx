@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import ScholarshipGrid from '@/components/ScholarshipGrid'
+import RecentlyViewed from '@/components/RecentlyViewed'
 import type { Scholarship } from '@/types'
 
 export const revalidate = 3600
@@ -29,7 +30,7 @@ export default async function HomePage() {
   return (
     <div>
       {/* Hero */}
-      <div className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white">
+      <div className="bg-gradient-to-br from-primary-950 via-primary-900 to-primary-800 dark:from-slate-950 dark:via-primary-950 dark:to-primary-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="max-w-2xl">
             <p className="text-primary-200 text-sm font-medium uppercase tracking-wider mb-3">
@@ -59,6 +60,9 @@ export default async function HomePage() {
           </div>
         </div>
       </div>
+
+      {/* Recently viewed */}
+      <RecentlyViewed />
 
       {/* Search + Grid */}
       <ScholarshipGrid scholarships={list} faculties={faculties} types={types} />

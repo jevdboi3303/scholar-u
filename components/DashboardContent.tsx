@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { User, BookMarked, Calendar, Loader2, Trash2, CheckCircle } from 'lucide-react'
+import { User, BookMarked, Calendar, Loader2, Trash2, CheckCircle, Sparkles, DollarSign, Clock } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import DeadlineTracker from './DeadlineTracker'
 import type { UserProfile, SavedScholarship } from '@/types'
@@ -12,6 +12,7 @@ interface Props {
   user: { id: string; email: string }
   profile: UserProfile | null
   savedScholarships: SavedScholarship[]
+  matchCount: number
 }
 
 type Tab = 'saved' | 'deadlines' | 'profile'
@@ -21,7 +22,7 @@ const FACULTIES = [
   'Humanities', 'Law', 'Music', 'Science', 'Social Sciences',
 ]
 
-export default function DashboardContent({ user, profile, savedScholarships: initial }: Props) {
+export default function DashboardContent({ user, profile, savedScholarships: initial, matchCount }: Props) {
   const router = useRouter()
   const [tab, setTab] = useState<Tab>('saved')
   const [saved, setSaved] = useState(initial)
@@ -98,16 +99,71 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
         </button>
       </div>
 
+      {/* Stats */}
+      {(() => {
+        const totalValue = saved.reduce((sum, s) => sum + (s.scholarship.amount ?? 0), 0)
+        const now = Date.now()
+        const deadlinesSoon = saved.filter(s => {
+          if (!s.scholarship.deadline) return false
+          const days = (new Date(s.scholarship.deadline).getTime() - now) / 86400000
+          return days >= 0 && days <= 30
+        }).length
+        return (
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+            {matchCount > 0 && (
+              <div className="card p-4">
+                <div className="flex items-center gap-2 text-primary-600 mb-1">
+                  <Sparkles className="w-4 h-4" />
+                  <span className="text-xs font-medium uppercase tracking-wide">Matches you</span>
+                </div>
+                <p className="text-2xl font-bold text-slate-900 dark:text-slate-100">{matchCount.toLocaleString()}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">scholarships</p>
+              </div>
+            )}
+            <div className="card p-4">
+              <div className="flex items-center gap-2 text-slate-500 mb-1">
+                <BookMarked className="w-4 h-4" />
+                <span className="text-xs font-medium uppercase tracking-wide">Saved</span>
+              </div>
+              <p className="text-2xl font-bold text-slate-900 dark:text-slate-100">{saved.length}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">scholarships</p>
+            </div>
+            {totalValue > 0 && (
+              <div className="card p-4">
+                <div className="flex items-center gap-2 text-emerald-600 mb-1">
+                  <DollarSign className="w-4 h-4" />
+                  <span className="text-xs font-medium uppercase tracking-wide">Potential value</span>
+                </div>
+                <p className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+                  {new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD', maximumFractionDigits: 0 }).format(totalValue)}
+                </p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">from saved awards</p>
+              </div>
+            )}
+            {deadlinesSoon > 0 && (
+              <div className="card p-4">
+                <div className="flex items-center gap-2 text-amber-600 mb-1">
+                  <Clock className="w-4 h-4" />
+                  <span className="text-xs font-medium uppercase tracking-wide">Due soon</span>
+                </div>
+                <p className="text-2xl font-bold text-slate-900 dark:text-slate-100">{deadlinesSoon}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">deadlines in 30 days</p>
+              </div>
+            )}
+          </div>
+        )
+      })()}
+
       {/* Tabs */}
-      <div className="flex gap-1 bg-slate-100 rounded-lg p-1 mb-6 w-fit">
+      <div className="flex gap-1 bg-slate-100 dark:bg-slate-800 rounded-lg p-1 mb-6 w-fit">
         {tabs.map(({ key, label, icon, count }) => (
           <button
             key={key}
             onClick={() => setTab(key)}
             className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
               tab === key
-                ? 'bg-white text-slate-900 shadow-sm'
-                : 'text-slate-600 hover:text-slate-800'
+                ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 shadow-sm'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             {icon}
