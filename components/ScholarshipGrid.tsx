@@ -284,7 +284,7 @@ export default function ScholarshipGrid({ scholarships, faculties, types }: Prop
           <SlidersHorizontal className="w-4 h-4" />
           Filters
           {activeCount > 0 && (
-            <span className="badge bg-primary-100 text-primary-700 -mr-1">{activeCount}</span>
+            <span className="badge bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 -mr-1">{activeCount}</span>
           )}
         </button>
       </div>
@@ -353,7 +353,7 @@ export default function ScholarshipGrid({ scholarships, faculties, types }: Prop
           </div>
 
           {sorted.length === 0 ? (
-            <div className="text-center py-16 text-slate-400">
+            <div className="text-center py-16 text-slate-400 dark:text-slate-500">
               <Search className="w-10 h-10 mx-auto mb-3 opacity-40" />
               <p className="font-medium text-slate-600 dark:text-slate-400">No scholarships match your filters</p>
 

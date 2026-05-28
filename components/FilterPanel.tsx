@@ -30,7 +30,7 @@ export default function FilterPanel({ filters, faculties, types, onChange, onRes
         {activeCount > 0 && (
           <button
             onClick={onReset}
-            className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-700"
+            className="flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
           >
             <X className="w-3 h-3" />
             Clear
@@ -173,7 +173,7 @@ export default function FilterPanel({ filters, faculties, types, onChange, onRes
 
       {/* Checkboxes */}
       <div className="space-y-2.5">
-        <label className="block text-xs font-medium text-slate-500 uppercase tracking-wide">
+        <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">
           Eligibility
         </label>
         <label className="flex items-center gap-2.5 cursor-pointer group">

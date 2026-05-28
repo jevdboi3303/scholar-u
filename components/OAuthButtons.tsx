@@ -64,7 +64,7 @@ export default function OAuthButtons({ redirectTo = '/dashboard' }: Props) {
           type="button"
           onClick={() => handleOAuth(id)}
           disabled={loading !== null}
-          className="w-full flex items-center justify-center gap-3 px-4 py-2.5 rounded-lg border border-slate-200 bg-white text-sm font-medium text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+          className="w-full flex items-center justify-center gap-3 px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
         >
           {loading === id ? (
             <svg className="w-5 h-5 animate-spin text-slate-400" fill="none" viewBox="0 0 24 24">

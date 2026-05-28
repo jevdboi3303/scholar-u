@@ -14,10 +14,10 @@ interface Props {
 }
 
 const TYPE_COLORS: Record<string, string> = {
-  'Entrance': 'bg-violet-100 text-violet-700',
-  'In-Course': 'bg-blue-100 text-blue-700',
-  'Graduate': 'bg-emerald-100 text-emerald-700',
-  'Exchange': 'bg-amber-100 text-amber-700',
+  'Entrance': 'bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300',
+  'In-Course': 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
+  'Graduate': 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300',
+  'Exchange': 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300',
 }
 
 export default function ScholarshipCard({ scholarship, saved = false, onSaveToggle, isLoggedIn }: Props) {
@@ -47,7 +47,7 @@ export default function ScholarshipCard({ scholarship, saved = false, onSaveTogg
     setSaving(false)
   }
 
-  const typeColor = TYPE_COLORS[scholarship.scholarship_type ?? ''] ?? 'bg-slate-100 text-slate-600'
+  const typeColor = TYPE_COLORS[scholarship.scholarship_type ?? ''] ?? 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300'
 
   return (
     <div className="card flex flex-col">
@@ -61,16 +61,16 @@ export default function ScholarshipCard({ scholarship, saved = false, onSaveTogg
               </span>
             )}
             {scholarship.application_required && (
-              <span className="badge bg-orange-100 text-orange-700">App Required</span>
+              <span className="badge bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300">App Required</span>
             )}
             {scholarship.renewable && (
-              <span className="badge bg-green-100 text-green-700">Renewable</span>
+              <span className="badge bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300">Renewable</span>
             )}
             {scholarship.indigenous && (
-              <span className="badge bg-teal-100 text-teal-700">Indigenous</span>
+              <span className="badge bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300">Indigenous</span>
             )}
             {scholarship.disability && (
-              <span className="badge bg-purple-100 text-purple-700">Disability</span>
+              <span className="badge bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300">Disability</span>
             )}
           </div>
           <button
@@ -92,21 +92,21 @@ export default function ScholarshipCard({ scholarship, saved = false, onSaveTogg
         <h3 className="font-semibold text-base leading-snug mb-3">
           <Link
             href={`/scholarships/${scholarship.id}`}
-            className="text-slate-900 hover:text-primary-600 transition-colors"
+            className="text-slate-900 dark:text-slate-100 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
           >
             {scholarship.name}
           </Link>
         </h3>
 
         {/* Meta row */}
-        <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-slate-500 mb-3">
+        <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-slate-500 dark:text-slate-400 mb-3">
           {scholarship.amount ? (
-            <span className="flex items-center gap-1 font-semibold text-emerald-700">
+            <span className="flex items-center gap-1 font-semibold text-emerald-700 dark:text-emerald-400">
               <DollarSign className="w-3.5 h-3.5" />
               {formatAmount(scholarship.amount)}
             </span>
           ) : (
-            <span className="flex items-center gap-1 text-slate-400">
+            <span className="flex items-center gap-1 text-slate-400 dark:text-slate-500">
               <DollarSign className="w-3.5 h-3.5" />
               Varies
             </span>
@@ -129,10 +129,10 @@ export default function ScholarshipCard({ scholarship, saved = false, onSaveTogg
         {(scholarship.deadline || scholarship.deadline_text) && (
           <div className={cn(
             'flex items-center gap-1.5 text-xs rounded-lg px-2.5 py-1.5 mb-3 w-fit',
-            scholarship.deadline && urgency === 'overdue' && 'bg-red-50 text-red-700',
-            scholarship.deadline && urgency === 'urgent' && 'bg-amber-50 text-amber-700',
-            scholarship.deadline && urgency === 'soon' && 'bg-yellow-50 text-yellow-700',
-            (!scholarship.deadline || urgency === 'upcoming') && 'bg-slate-50 text-slate-600',
+            scholarship.deadline && urgency === 'overdue' && 'bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400',
+            scholarship.deadline && urgency === 'urgent' && 'bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
+            scholarship.deadline && urgency === 'soon' && 'bg-yellow-50 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
+            (!scholarship.deadline || urgency === 'upcoming') && 'bg-slate-50 text-slate-600 dark:bg-slate-800 dark:text-slate-400',
           )}>
             {scholarship.deadline && (urgency === 'urgent' || urgency === 'overdue')
               ? <AlertCircle className="w-3.5 h-3.5" />
@@ -153,7 +153,7 @@ export default function ScholarshipCard({ scholarship, saved = false, onSaveTogg
         {scholarship.description && (
           <div>
             <p className={cn(
-              'text-sm text-slate-600 leading-relaxed',
+              'text-sm text-slate-600 dark:text-slate-400 leading-relaxed',
               !expanded && 'line-clamp-3'
             )}>
               {scholarship.description}
@@ -176,9 +176,9 @@ export default function ScholarshipCard({ scholarship, saved = false, onSaveTogg
 
       {/* Footer */}
       {(scholarship.source_url || (scholarship.preference && scholarship.preference !== 'N/A')) && (
-        <div className="px-5 py-3 border-t border-slate-100 bg-slate-50 rounded-b-xl flex items-center justify-between gap-3">
+        <div className="px-5 py-3 border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 rounded-b-xl flex items-center justify-between gap-3">
           {scholarship.preference && scholarship.preference !== 'N/A' && (
-            <p className="text-xs text-slate-500 min-w-0 truncate">
+            <p className="text-xs text-slate-500 dark:text-slate-400 min-w-0 truncate">
               <span className="font-medium">Preference: </span>{scholarship.preference}
             </p>
           )}

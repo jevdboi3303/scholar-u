@@ -89,10 +89,10 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
             {profile?.name ? `Hi, ${profile.name.split(' ')[0]}` : 'My Dashboard'}
           </h1>
-          <p className="text-slate-500 text-sm mt-0.5">{user.email}</p>
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-0.5">{user.email}</p>
         </div>
         <button onClick={handleSignOut} className="btn-secondary text-sm">
           Sign out
@@ -112,7 +112,7 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
             {matchCount > 0 && (
               <div className="card p-4">
-                <div className="flex items-center gap-2 text-primary-600 mb-1">
+                <div className="flex items-center gap-2 text-primary-600 dark:text-primary-400 mb-1">
                   <Sparkles className="w-4 h-4" />
                   <span className="text-xs font-medium uppercase tracking-wide">Matches you</span>
                 </div>
@@ -121,7 +121,7 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
               </div>
             )}
             <div className="card p-4">
-              <div className="flex items-center gap-2 text-slate-500 mb-1">
+              <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 mb-1">
                 <BookMarked className="w-4 h-4" />
                 <span className="text-xs font-medium uppercase tracking-wide">Saved</span>
               </div>
@@ -130,7 +130,7 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
             </div>
             {totalValue > 0 && (
               <div className="card p-4">
-                <div className="flex items-center gap-2 text-emerald-600 mb-1">
+                <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 mb-1">
                   <DollarSign className="w-4 h-4" />
                   <span className="text-xs font-medium uppercase tracking-wide">Potential value</span>
                 </div>
@@ -142,7 +142,7 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
             )}
             {deadlinesSoon > 0 && (
               <div className="card p-4">
-                <div className="flex items-center gap-2 text-amber-600 mb-1">
+                <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 mb-1">
                   <Clock className="w-4 h-4" />
                   <span className="text-xs font-medium uppercase tracking-wide">Due soon</span>
                 </div>
@@ -169,7 +169,7 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
             {icon}
             {label}
             {count !== undefined && count > 0 && (
-              <span className="badge bg-primary-100 text-primary-700 ml-0.5">{count}</span>
+              <span className="badge bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 ml-0.5">{count}</span>
             )}
           </button>
         ))}
@@ -179,9 +179,9 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
       {tab === 'saved' && (
         <div>
           {saved.length === 0 ? (
-            <div className="card p-12 text-center text-slate-400">
+            <div className="card p-12 text-center text-slate-400 dark:text-slate-500">
               <BookMarked className="w-10 h-10 mx-auto mb-3 opacity-40" />
-              <p className="font-medium text-slate-600">No saved scholarships yet</p>
+              <p className="font-medium text-slate-600 dark:text-slate-400">No saved scholarships yet</p>
               <p className="text-sm mt-1">Browse scholarships and bookmark the ones you&apos;re interested in</p>
             </div>
           ) : (
@@ -189,10 +189,10 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
               {saved.map((item) => (
                 <div key={item.id} className="card p-4 flex items-start gap-4">
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-slate-800 text-sm">{item.scholarship.name}</h3>
-                    <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500 mt-1">
+                    <h3 className="font-semibold text-slate-800 dark:text-slate-200 text-sm">{item.scholarship.name}</h3>
+                    <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500 dark:text-slate-400 mt-1">
                       {item.scholarship.amount && (
-                        <span className="text-emerald-600 font-medium">
+                        <span className="text-emerald-600 dark:text-emerald-400 font-medium">
                           {formatAmount(item.scholarship.amount)}
                         </span>
                       )}
@@ -208,7 +208,7 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
                     <select
                       value={item.status}
                       onChange={(e) => updateStatus(item.scholarship_id, e.target.value)}
-                      className="text-xs border border-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-primary-500"
                     >
                       <option value="saved">Saved</option>
                       <option value="applied">Applied</option>
@@ -216,7 +216,7 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
                     </select>
                     <button
                       onClick={() => unsave(item.scholarship_id)}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+                      className="p-1.5 rounded-lg text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -236,10 +236,10 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
       {/* Profile */}
       {tab === 'profile' && (
         <div className="card p-6 max-w-lg">
-          <h2 className="font-semibold text-slate-800 mb-5">Your profile</h2>
+          <h2 className="font-semibold text-slate-800 dark:text-slate-200 mb-5">Your profile</h2>
           <form onSubmit={saveProfile} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">Full name</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Full name</label>
               <input
                 type="text"
                 value={name}
@@ -251,7 +251,7 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">Faculty</label>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Faculty</label>
                 <select
                   value={faculty}
                   onChange={(e) => setFaculty(e.target.value)}
@@ -264,7 +264,7 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">Year</label>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Year</label>
                 <select
                   value={year}
                   onChange={(e) => setYear(e.target.value)}
@@ -282,7 +282,7 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">GPA (out of 9.0)</label>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">GPA (out of 9.0)</label>
                 <input
                   type="number"
                   min="0"
@@ -295,7 +295,7 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">Gender</label>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Gender</label>
                 <select
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
@@ -318,7 +318,7 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
                   onChange={(e) => setIndigenous(e.target.checked)}
                   className="w-4 h-4 rounded text-primary-600 border-slate-300"
                 />
-                <span className="text-sm text-slate-700">I identify as Indigenous</span>
+                <span className="text-sm text-slate-700 dark:text-slate-300">I identify as Indigenous</span>
               </label>
               <label className="flex items-center gap-2.5 cursor-pointer">
                 <input
@@ -327,7 +327,7 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
                   onChange={(e) => setDisability(e.target.checked)}
                   className="w-4 h-4 rounded text-primary-600 border-slate-300"
                 />
-                <span className="text-sm text-slate-700">I have a disability</span>
+                <span className="text-sm text-slate-700 dark:text-slate-300">I have a disability</span>
               </label>
             </div>
 

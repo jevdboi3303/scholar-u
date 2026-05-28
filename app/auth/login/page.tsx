@@ -32,14 +32,14 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 bg-slate-50">
+    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 bg-slate-50 dark:bg-slate-950">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-12 h-12 bg-primary-100 rounded-xl mb-4">
-            <LogIn className="w-6 h-6 text-primary-600" />
+          <div className="inline-flex items-center justify-center w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-xl mb-4">
+            <LogIn className="w-6 h-6 text-primary-600 dark:text-primary-400" />
           </div>
-          <h1 className="text-2xl font-bold text-slate-900">Welcome back</h1>
-          <p className="text-slate-500 mt-1">Sign in to your ScholarU account</p>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Welcome back</h1>
+          <p className="text-slate-500 dark:text-slate-400 mt-1">Sign in to your ScholarU account</p>
         </div>
 
         <div className="card p-8">
@@ -48,16 +48,16 @@ export default function LoginPage() {
 
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-slate-200" />
+              <div className="w-full border-t border-slate-200 dark:border-slate-700" />
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-white px-3 text-xs text-slate-400 uppercase tracking-wide">or continue with email</span>
+              <span className="bg-white dark:bg-slate-900 px-3 text-xs text-slate-400 dark:text-slate-500 uppercase tracking-wide">or continue with email</span>
             </div>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
                 Email address
               </label>
               <div className="relative">
@@ -74,7 +74,7 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
                 Password
               </label>
               <div className="relative">
@@ -91,7 +91,7 @@ export default function LoginPage() {
             </div>
 
             {error && (
-              <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-sm text-red-700">
+              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg px-4 py-3 text-sm text-red-700 dark:text-red-400">
                 {error}
               </div>
             )}
@@ -105,7 +105,7 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <p className="text-center text-sm text-slate-500 mt-6">
+          <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-6">
             Don&apos;t have an account?{' '}
             <Link href="/auth/signup" className="text-primary-600 font-medium hover:underline">
               Create one
