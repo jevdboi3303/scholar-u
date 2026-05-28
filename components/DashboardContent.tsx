@@ -31,6 +31,7 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
   const [faculty, setFaculty] = useState(profile?.faculty ?? '')
   const [year, setYear] = useState(profile?.year ?? '')
   const [gpa, setGpa] = useState(profile?.gpa?.toString() ?? '')
+  const [gender, setGender] = useState(profile?.gender ?? '')
   const [indigenous, setIndigenous] = useState(profile?.indigenous ?? false)
   const [disability, setDisability] = useState(profile?.disability ?? false)
   const [profileSaving, setProfileSaving] = useState(false)
@@ -49,7 +50,7 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
     await fetch('/api/profile', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, faculty, year, gpa, indigenous, disability }),
+      body: JSON.stringify({ name, faculty, year, gpa, gender, indigenous, disability }),
     })
     setProfileSaving(false)
     setProfileSaved(true)
@@ -223,18 +224,34 @@ export default function DashboardContent({ user, profile, savedScholarships: ini
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">GPA (out of 9.0)</label>
-              <input
-                type="number"
-                min="0"
-                max="9"
-                step="0.1"
-                value={gpa}
-                onChange={(e) => setGpa(e.target.value)}
-                placeholder="e.g. 7.5"
-                className="input-field"
-              />
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1.5">GPA (out of 9.0)</label>
+                <input
+                  type="number"
+                  min="0"
+                  max="9"
+                  step="0.1"
+                  value={gpa}
+                  onChange={(e) => setGpa(e.target.value)}
+                  placeholder="e.g. 7.5"
+                  className="input-field"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1.5">Gender</label>
+                <select
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  className="input-field"
+                >
+                  <option value="">Prefer not to say</option>
+                  <option value="Woman">Woman</option>
+                  <option value="Man">Man</option>
+                  <option value="Non-binary">Non-binary</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
             </div>
 
             <div className="space-y-2.5 pt-1">

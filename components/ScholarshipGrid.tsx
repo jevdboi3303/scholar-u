@@ -57,8 +57,8 @@ function matchesProfile(s: Scholarship, profile: UserProfile): boolean {
   // Disability-only scholarships
   if (s.disability && !profile.disability) return false
 
-  // Gender-restricted scholarships
-  if (s.gender && profile.gender && s.gender !== profile.gender) return false
+  // Gender-based scholarships: UVic only tags them as "Gender-based" without
+  // specifying which gender, so we can't reliably filter here — show to everyone.
 
   // International-only scholarships
   if (s.nationality === 'International' && profile.nationality !== 'International') return false

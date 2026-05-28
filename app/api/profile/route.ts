@@ -9,12 +9,12 @@ export async function POST(request: Request) {
   const body = await request.json()
   const profile = {
     id: user.id,
-    name: body.name ?? null,
-    faculty: body.faculty ?? null,
-    year: body.year ?? null,
+    name: body.name || null,
+    faculty: body.faculty || null,
+    year: body.year || null,
     gpa: body.gpa ? parseFloat(body.gpa) : null,
-    gender: body.gender ?? null,
-    nationality: body.nationality ?? null,
+    gender: body.gender || null,
+    nationality: body.nationality || null,
     indigenous: body.indigenous ?? false,
     disability: body.disability ?? false,
   }
