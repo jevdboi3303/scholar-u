@@ -46,7 +46,7 @@ export default function OAuthButtons({ redirectTo = '/dashboard' }: Props) {
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirectTo)}`,
+        redirectTo: `${window.location.origin}/auth/callback`,
       },
     })
     if (error) {
