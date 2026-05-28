@@ -57,6 +57,23 @@ console.log(`Fetched ${raw.length} scholarships from UVic`)
 //  [6] student focus tags
 //  [7] award type tags
 
+// ── HTML entity decoder ───────────────────────────────────────────────────────
+const ENTITIES = {
+  '&amp;':  '&',
+  '&apos;': "'",
+  '&quot;': '"',
+  '&#225;': 'á',
+  '&#233;': 'é',
+  '&#243;': 'ó',
+  '&#333;': 'ō',
+  '&#8217;': '’', // right single quote '
+  '&#8220;': '“', // left double quote "
+  '&#8221;': '”', // right double quote "
+}
+function decodeEntities(str) {
+  return str.replace(/&[a-z#0-9]+;/gi, m => ENTITIES[m] ?? m)
+}
+
 function parseAmount(valueStr) {
   if (!valueStr) return null
   const m = valueStr.match(/\$([0-9,]+)/)
@@ -82,12 +99,14 @@ function parseRecord(row) {
   const rawHTML  = nameCell.text ?? ''
   const nameMatch = rawHTML.match(/<a[^>]*>([^<]+)<\/a>/)
   const rawName = nameMatch ? nameMatch[1].trim() : getText(nameCell).split('\n')[0].trim()
-  // Strip trailing asterisk (UVic "subject to Senate approval" marker) and any stray whitespace
-  const name = rawName.replace(/\*+$/, '').trim()
+  // Strip trailing asterisk (UVic "subject to Senate approval" marker), decode HTML entities, trim
+  const name = decodeEntities(rawName.replace(/\*+$/, '').trim())
 
-  // Strip the name anchor to get pure description HTML, then strip all tags
+  // Strip the name anchor to get pure description HTML, then strip all tags and decode entities
   const descHTML = rawHTML.replace(/<a[^>]*>[^<]*<\/a>/, '').trim()
-  const description = descHTML.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim() || null
+  const description = decodeEntities(
+    descHTML.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()
+  ) || null
 
   // URL to the individual scholarship page
   const urlMatch = rawHTML.match(/href='([^']+)'/)
@@ -176,9 +195,21 @@ function parseRecord(row) {
   }
 }
 
-const scholarships = raw.map(parseRecord).filter(s => s.name)
+const parsed = raw.map(parseRecord).filter(s => s.name)
 
-console.log(`Parsed ${scholarships.length} scholarships`)
+// Deduplicate: UVic API occasionally returns the same award twice
+// (same name + same type + same faculty). Keep first occurrence.
+const seen = new Set()
+const scholarships = parsed.filter(s => {
+  const key = `${s.name.toLowerCase()}|${s.scholarship_type ?? ''}|${s.faculty ?? ''}`
+  if (seen.has(key)) return false
+  seen.add(key)
+  return true
+})
+
+const dupsRemoved = parsed.length - scholarships.length
+console.log(`Parsed ${parsed.length} scholarships, removed ${dupsRemoved} true duplicates`)
+console.log(`Net: ${scholarships.length} scholarships`)
 
 // Preview a few
 console.log('\nSample records:')
