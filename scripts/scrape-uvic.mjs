@@ -81,7 +81,9 @@ function parseRecord(row) {
   const nameCell = textCells[0] ?? {}
   const rawHTML  = nameCell.text ?? ''
   const nameMatch = rawHTML.match(/<a[^>]*>([^<]+)<\/a>/)
-  const name = nameMatch ? nameMatch[1].trim() : getText(nameCell).split('\n')[0].trim()
+  const rawName = nameMatch ? nameMatch[1].trim() : getText(nameCell).split('\n')[0].trim()
+  // Strip trailing asterisk (UVic "subject to Senate approval" marker) and any stray whitespace
+  const name = rawName.replace(/\*+$/, '').trim()
 
   // Strip the name anchor to get pure description HTML, then strip all tags
   const descHTML = rawHTML.replace(/<a[^>]*>[^<]*<\/a>/, '').trim()
@@ -92,7 +94,11 @@ function parseRecord(row) {
   const source_url = urlMatch ? urlMatch[1] : null
 
   // ── Deadline
-  const deadline_text = getText(textCells[1]) || null
+  // UVic uses "no application required" as a deadline placeholder — store as null
+  const rawDeadline = getText(textCells[1])
+  const deadline_text = (rawDeadline && rawDeadline.toLowerCase() !== 'no application required')
+    ? rawDeadline
+    : null
 
   // ── Value / quantity
   const valueText = getText(textCells[2]) || ''
