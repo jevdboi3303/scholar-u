@@ -24,8 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <footer className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 mt-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
               <p className="text-sm text-slate-500 dark:text-slate-400">
-                © {new Date().getFullYear()} ScholarU · Built by students at{' '}
-                <span className="font-medium text-primary-600">VikeLabs</span>
+                © {new Date().getFullYear()} ScholarU
               </p>
               <p className="text-sm text-slate-400 dark:text-slate-500">
                 University of Victoria scholarships database
